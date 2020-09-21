@@ -44,8 +44,12 @@ int __win_stat(const char *path, struct stat *buffer, int iDeref)
   uint8_t bWideChar;
   struct stat_desc stats[] =
        {
+#if HAVE_DECL__STAT32
            {0, 4, 4, (statptr) _stat32},
+#endif
+#if HAVE_DECL__WSTAT32
            {1, 4, 4, (statptr) _wstat32},
+#endif
            {0, 8, 8, (statptr) _stat64},
            {1, 8, 8, (statptr) _wstat64}
 #if HAVE_DECL__WSTAT32I64
